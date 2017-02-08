@@ -172,141 +172,6 @@ __error__(char *pcFilename, uint32_t ui32Line)
 
 //*****************************************************************************
 //
-// Display an lwIP type IP Address.
-//
-//*****************************************************************************
-void
-DisplayIPAddress(uint32_t ui32Addr, uint32_t ui32Col, uint32_t ui32Row)
-{
-    char pcBuf[16];
-
-    //
-    // Convert the IP Address into a string.
-    //
-    usprintf(pcBuf, "%d.%d.%d.%d", ui32Addr & 0xff, (ui32Addr >> 8) & 0xff,
-             (ui32Addr >> 16) & 0xff, (ui32Addr >> 24) & 0xff);
-
-    //
-    // Display the string.
-    //
-    GrStringDraw(&g_sContext, pcBuf, -1, ui32Col, ui32Row, false);
-}
-
-//*****************************************************************************
-//
-// Required by lwIP library to support any host-related timer functions.
-//
-//*****************************************************************************
-void
-lwIPHostTimerHandler(void)
-{
-    uint32_t ui32Idx, ui32NewIPAddress, ui32Width, ui32Height;
-    tRectangle sRect;
-
-    //
-    // Get the width and height of the display.
-    //
-    ui32Width = GrContextDpyWidthGet(&g_sContext);
-    ui32Height = GrContextDpyHeightGet(&g_sContext);
-
-    //
-    // Get the current IP address.
-    //
-    ui32NewIPAddress = lwIPLocalIPAddrGet();
-
-    //
-    // See if the IP address has changed.
-    //
-    if(ui32NewIPAddress != g_ui32IPAddress)
-    {
-        //
-        // Clear the display.
-        //
-        sRect.i16XMin = 0;
-        sRect.i16YMin = 0;
-        sRect.i16XMax = ui32Width - 1;
-        sRect.i16YMax = ui32Height - 1;
-        GrContextForegroundSet(&g_sContext, ClrBlack);
-        GrRectFill(&g_sContext, &sRect);
-        GrContextForegroundSet(&g_sContext, ClrWhite);
-
-        //
-        // See if there is an IP address assigned.
-        //
-        if(ui32NewIPAddress == 0xffffffff)
-        {
-            //
-            // Indicate that there is no link.
-            //
-            GrStringDrawCentered(&g_sContext, "Waiting for link", -1,
-                                 ui32Width / 2, (ui32Height / 2) - 18, false);
-        }
-        else if(ui32NewIPAddress == 0)
-        {
-            //
-            // There is no IP address, so indicate that the DHCP process is
-            // running.
-            //
-            GrStringDrawCentered(&g_sContext, "Waiting for IP address", -1,
-                                 ui32Width / 2, (ui32Height / 2) - 18, false);
-        }
-        else
-        {
-            //
-            // Display the new IP address information.
-            //
-            GrStringDraw(&g_sContext, "IP Address:", -1, (ui32Width / 2) - 110,
-                         (ui32Height / 2) + 8 - 10 - 20, false);
-            GrStringDraw(&g_sContext, "Subnet Mask:", -1,
-                         (ui32Width / 2) - 110, (ui32Height / 2) + 8 - 10,
-                         false);
-            GrStringDraw(&g_sContext, "Gateway:", -1, (ui32Width / 2) - 110,
-                         (ui32Height / 2) + 8 - 10 + 20, false);
-            DisplayIPAddress(ui32NewIPAddress, ui32Width / 2,
-                             (ui32Height / 2) + 8 - 10 - 20);
-            DisplayIPAddress(lwIPLocalNetMaskGet(), ui32Width / 2,
-                             (ui32Height / 2) + 8 - 10);
-            DisplayIPAddress(lwIPLocalGWAddrGet(), ui32Width / 2,
-                             (ui32Height / 2) + 8 - 10 + 20);
-        }
-
-        //
-        // Save the new IP address.
-        //
-        g_ui32IPAddress = ui32NewIPAddress;
-    }
-
-    //
-    // If there is not an IP address, draw the animated circle.
-    //
-    if((ui32NewIPAddress == 0) || (ui32NewIPAddress == 0xffffffff))
-    {
-        //
-        // Loop through the circles in the animation.
-        //
-        for(ui32Idx = 0; ui32Idx < 8; ui32Idx++)
-        {
-            //
-            // Draw this circle.
-            //
-            GrContextForegroundSet(&g_sContext,
-                                   g_pui32CircleColor[(g_ui32ColorIdx +
-                                                       ui32Idx) & 7]);
-            GrCircleFill(&g_sContext,
-                         (ui32Width / 2) + g_ppi32CirclePos[ui32Idx][0],
-                         (ui32Height / 2) + g_ppi32CirclePos[ui32Idx][1] + 24,
-                         2);
-        }
-
-        //
-        // Increment the color index.
-        //
-        g_ui32ColorIdx++;
-    }
-}
-
-//*****************************************************************************
-//
 // The interrupt handler for the SysTick interrupt.
 //
 //*****************************************************************************
@@ -321,28 +186,14 @@ SysTickIntHandler(void)
 
 //*****************************************************************************
 //
-// This example demonstrates the use of the Ethernet Controller.
+// Setup all IP Address related functions here
 //
 //*****************************************************************************
-int
-main(void)
+void
+setupLwIP(void)
 {
-    uint32_t ui32User0, ui32User1;
     uint8_t pui8MACArray[8];
-
-    //
-    // Run from the PLL at 120 MHz.
-    //
-    g_ui32SysClock = MAP_SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ |
-                                             SYSCTL_OSC_MAIN | SYSCTL_USE_PLL |
-                                             SYSCTL_CFG_VCO_480), 120000000);
-
-    //
-    // Configure SysTick for a periodic interrupt.
-    //
-    ROM_SysTickPeriodSet(g_ui32SysClock / SYSTICKHZ);
-    ROM_SysTickEnable();
-    ROM_SysTickIntEnable();
+    uint32_t ui32User0, ui32User1;
 
     //
     // Configure the hardware MAC address for Ethernet Controller filtering of
@@ -361,7 +212,7 @@ main(void)
         }
     }
 
-    //
+	//
     // Convert the 24/24 split MAC address from NV ram into a 32/16 split MAC
     // address needed to program the hardware registers, then program the MAC
     // address into the Ethernet Controller registers.
@@ -380,6 +231,34 @@ main(void)
     // 0xFFFFFF00 is 255.255.255.0
     //
     lwIPInit(g_ui32SysClock, pui8MACArray, 0xC0A8166F, 0xFFFFFF00, 0, IPADDR_USE_STATIC);
+}
+
+//*****************************************************************************
+//
+// This example demonstrates the use of the Ethernet Controller.
+//
+//*****************************************************************************
+int
+main(void)
+{
+    //
+    // Run from the PLL at 120 MHz.
+    //
+    g_ui32SysClock = MAP_SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ |
+                                             SYSCTL_OSC_MAIN | SYSCTL_USE_PLL |
+                                             SYSCTL_CFG_VCO_480), 120000000);
+
+    //
+    // Configure SysTick for a periodic interrupt.
+    //
+    ROM_SysTickPeriodSet(g_ui32SysClock / SYSTICKHZ);
+    ROM_SysTickEnable();
+    ROM_SysTickIntEnable();
+
+    //
+    // Setup the ethernet lwip here
+    //
+    setupLwIP();
 
     //
     // Set the interrupt priorities.  We set the SysTick interrupt to a higher
