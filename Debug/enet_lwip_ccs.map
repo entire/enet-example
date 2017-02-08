@@ -1,7 +1,7 @@
 ******************************************************************************
                   TI ARM Linker Unix v15.12.1                  
 ******************************************************************************
->> Linked Tue Feb  7 18:02:48 2017
+>> Linked Tue Feb  7 18:19:56 2017
 
 OUTPUT FILE NAME:   <enet_example.out>
 ENTRY POINT SYMBOL: "_c_int00"  address: 00003fcd
@@ -11,7 +11,7 @@ MEMORY CONFIGURATION
 
          name            origin    length      used     unused   attr    fill
 ----------------------  --------  ---------  --------  --------  ----  --------
-  FLASH                 00000000   00100000  00005181  000fae7f  R  X
+  FLASH                 00000000   00100000  00005177  000fae89  R  X
   SRAM                  20000000   00040000  000182b6  00027d4a  RW X
 
 
@@ -19,11 +19,11 @@ SEGMENT ALLOCATION MAP
 
 run origin  load origin   length   init length attrs members
 ----------  ----------- ---------- ----------- ----- -------
-00000000    00000000    00005188   00005188    r-x
+00000000    00000000    00005178   00005178    r-x
   00000000    00000000    00000200   00000200    r-- .intvecs
-  00000200    00000200    00004c02   00004c02    r-x .text
-  00004e04    00004e04    0000031f   0000031f    r-- .const
-  00005128    00005128    00000060   00000060    r-- .cinit
+  00000200    00000200    00004bf8   00004bf8    r-x .text
+  00004df8    00004df8    0000031f   0000031f    r-- .const
+  00005118    00005118    00000060   00000060    r-- .cinit
 20000000    20000000    000182b8   00000000    rw-
   20000000    20000000    00017a52   00000000    rw- .bss
   20017a54    20017a54    00000800   00000000    rw- .stack
@@ -38,7 +38,7 @@ section   page    origin      length       input sections
 .intvecs   0    00000000    00000200     
                   00000000    00000200     startup_ccs.obj (.intvecs)
 
-.text      0    00000200    00004c02     
+.text      0    00000200    00004bf8     
                   00000200    000007bc     lwiplib.obj (.text:tcp_receive)
                   000009bc    000003b0     lwiplib.obj (.text:tcp_input)
                   00000d6c    000003b0     lwiplib.obj (.text:tcp_process)
@@ -193,51 +193,51 @@ section   page    origin      length       input sections
                   00004d0a    00000002     --HOLE-- [fill = 0]
                   00004d0c    00000010     driverlib.lib : emac.obj (.text:EMACFrameFilterSet)
                   00004d1c    00000010                   : interrupt.obj (.text:IntMasterEnable)
-                  00004d2c    00000010     enet_lwip.obj (.text:SysTickIntHandler)
-                  00004d3c    00000010     lwiplib.obj (.text:inet_chksum)
-                  00004d4c    00000010     lwiplib.obj (.text:lwip_init)
-                  00004d5c    00000010     lwiplib.obj (.text:sys_arch_protect)
-                  00004d6c    0000000e     rtsv7M4_T_le_v4SPD16_eabi.lib : copy_decompress_none.obj (.text:decompress:none)
-                  00004d7a    0000000c     driverlib.lib : cpu.obj (.text:CPUcpsie)
-                  00004d86    0000000c     lwiplib.obj (.text:lwip_htons)
-                  00004d92    00000002     --HOLE-- [fill = 0]
-                  00004d94    0000000c     lwiplib.obj (.text:netif_set_default)
-                  00004da0    0000000c     lwiplib.obj (.text:netif_set_gw)
-                  00004dac    0000000c     lwiplib.obj (.text:netif_set_netmask)
-                  00004db8    0000000c     lwiplib.obj (.text:sys_now)
-                  00004dc4    00000008     driverlib.lib : emac.obj (.text:EMACTxDMAPollDemand)
-                  00004dcc    00000008     lwiplib.obj (.text:icmp_dest_unreach)
-                  00004dd4    00000006     driverlib.lib : emac.obj (.text:EMACRxDMADescriptorListSet)
-                  00004dda    00000006                   : emac.obj (.text:EMACTimestampIntStatus)
-                  00004de0    00000006                   : emac.obj (.text:EMACTxDMADescriptorListSet)
-                  00004de6    00000006     startup_ccs.obj (.text:ResetISR)
-                  00004dec    00000006     driverlib.lib : sysctl.obj (.text:SysCtlDelay)
-                  00004df2    00000006     rtsv7M4_T_le_v4SPD16_eabi.lib : copy_decompress_rle.obj (.text:decompress:rle24)
-                  00004df8    00000006     lwiplib.obj (.text:tcp_abort)
-                  00004dfe    00000004     rtsv7M4_T_le_v4SPD16_eabi.lib : pre_init.obj (.text)
+                  00004d2c    00000010     lwiplib.obj (.text:inet_chksum)
+                  00004d3c    00000010     lwiplib.obj (.text:lwip_init)
+                  00004d4c    00000010     lwiplib.obj (.text:sys_arch_protect)
+                  00004d5c    0000000e     rtsv7M4_T_le_v4SPD16_eabi.lib : copy_decompress_none.obj (.text:decompress:none)
+                  00004d6a    0000000c     driverlib.lib : cpu.obj (.text:CPUcpsie)
+                  00004d76    0000000c     lwiplib.obj (.text:lwip_htons)
+                  00004d82    00000002     --HOLE-- [fill = 0]
+                  00004d84    0000000c     lwiplib.obj (.text:netif_set_default)
+                  00004d90    0000000c     lwiplib.obj (.text:netif_set_gw)
+                  00004d9c    0000000c     lwiplib.obj (.text:netif_set_netmask)
+                  00004da8    0000000c     lwiplib.obj (.text:sys_now)
+                  00004db4    00000008     driverlib.lib : emac.obj (.text:EMACTxDMAPollDemand)
+                  00004dbc    00000008     lwiplib.obj (.text:icmp_dest_unreach)
+                  00004dc4    00000006     driverlib.lib : emac.obj (.text:EMACRxDMADescriptorListSet)
+                  00004dca    00000006                   : emac.obj (.text:EMACTimestampIntStatus)
+                  00004dd0    00000006                   : emac.obj (.text:EMACTxDMADescriptorListSet)
+                  00004dd6    00000006     startup_ccs.obj (.text:ResetISR)
+                  00004ddc    00000006     driverlib.lib : sysctl.obj (.text:SysCtlDelay)
+                  00004de2    00000006     enet_lwip.obj (.text:SysTickIntHandler)
+                  00004de8    00000006     rtsv7M4_T_le_v4SPD16_eabi.lib : copy_decompress_rle.obj (.text:decompress:rle24)
+                  00004dee    00000006     lwiplib.obj (.text:tcp_abort)
+                  00004df4    00000004     rtsv7M4_T_le_v4SPD16_eabi.lib : pre_init.obj (.text)
 
-.const     0    00004e04    0000031f     
-                  00004e04    000001b0     driverlib.lib : sysctl.obj (.const:g_pppui32XTALtoVCO)
-                  00004fb4    00000070                   : interrupt.obj (.const)
-                  00005024    0000006c                   : sysctl.obj (.const:g_pui32Xtals)
-                  00005090    00000030                   : sysctl.obj (.const:g_sXTALtoMEMTIM)
-                  000050c0    00000018                   : emac.obj (.const)
-                  000050d8    00000010     lwiplib.obj (.const:memp_num)
-                  000050e8    00000010     lwiplib.obj (.const:memp_sizes)
-                  000050f8    0000000d     lwiplib.obj (.const:.string:tcp_backoff)
-                  00005105    00000003     --HOLE-- [fill = 0]
-                  00005108    00000008     driverlib.lib : sysctl.obj (.const)
-                  00005110    00000007     lwiplib.obj (.const:.string:tcp_persist_backoff)
-                  00005117    00000006     lwiplib.obj (.const:ethbroadcast)
-                  0000511d    00000006     lwiplib.obj (.const:ethzero)
+.const     0    00004df8    0000031f     
+                  00004df8    000001b0     driverlib.lib : sysctl.obj (.const:g_pppui32XTALtoVCO)
+                  00004fa8    00000070                   : interrupt.obj (.const)
+                  00005018    0000006c                   : sysctl.obj (.const:g_pui32Xtals)
+                  00005084    00000030                   : sysctl.obj (.const:g_sXTALtoMEMTIM)
+                  000050b4    00000018                   : emac.obj (.const)
+                  000050cc    00000010     lwiplib.obj (.const:memp_num)
+                  000050dc    00000010     lwiplib.obj (.const:memp_sizes)
+                  000050ec    0000000d     lwiplib.obj (.const:.string:tcp_backoff)
+                  000050f9    00000003     --HOLE-- [fill = 0]
+                  000050fc    00000008     driverlib.lib : sysctl.obj (.const)
+                  00005104    00000007     lwiplib.obj (.const:.string:tcp_persist_backoff)
+                  0000510b    00000006     lwiplib.obj (.const:ethbroadcast)
+                  00005111    00000006     lwiplib.obj (.const:ethzero)
 
-.cinit     0    00005128    00000060     
-                  00005128    00000037     (.cinit..data.load) [load image, compression = rle]
-                  0000515f    00000001     --HOLE-- [fill = 0]
-                  00005160    0000000d     (.cinit..bss.load) [load image, compression = rle]
-                  0000516d    00000003     --HOLE-- [fill = 0]
-                  00005170    00000008     (__TI_handler_table)
-                  00005178    00000010     (__TI_cinit_table)
+.cinit     0    00005118    00000060     
+                  00005118    00000037     (.cinit..data.load) [load image, compression = rle]
+                  0000514f    00000001     --HOLE-- [fill = 0]
+                  00005150    0000000d     (.cinit..bss.load) [load image, compression = rle]
+                  0000515d    00000003     --HOLE-- [fill = 0]
+                  00005160    00000008     (__TI_handler_table)
+                  00005168    00000010     (__TI_cinit_table)
 
 .init_array 
 *          0    00000000    00000000     UNINITIALIZED
@@ -292,9 +292,9 @@ MODULE SUMMARY
        ------                     ----    -------   -------
     ./
        startup_ccs.obj            12      512       0      
-       enet_lwip.obj              204     0         4      
+       enet_lwip.obj              194     0         4      
     +--+--------------------------+-------+---------+---------+
-       Total:                     216     512       4      
+       Total:                     206     512       4      
                                                            
     ./utils/
        lwiplib.obj                16822   64        96922  
@@ -331,19 +331,19 @@ MODULE SUMMARY
        Stack:                     0       0         2048   
        Linker Generated:          0       92        0      
     +--+--------------------------+-------+---------+---------+
-       Grand Total:               19438   1400      98998  
+       Grand Total:               19428   1400      98998  
 
 
 LINKER GENERATED COPY TABLES
 
-__TI_cinit_table @ 00005178 records: 2, size/record: 8, table size: 16
-	.data: load addr=00005128, load size=00000037 bytes, run addr=20018254, run size=00000064 bytes, compression=rle
-	.bss: load addr=00005160, load size=0000000d bytes, run addr=20000000, run size=00017a52 bytes, compression=rle
+__TI_cinit_table @ 00005168 records: 2, size/record: 8, table size: 16
+	.data: load addr=00005118, load size=00000037 bytes, run addr=20018254, run size=00000064 bytes, compression=rle
+	.bss: load addr=00005150, load size=0000000d bytes, run addr=20000000, run size=00017a52 bytes, compression=rle
 
 
 LINKER GENERATED HANDLER TABLE
 
-__TI_handler_table @ 00005170 records: 2, size/record: 4, table size: 8
+__TI_handler_table @ 00005160 records: 2, size/record: 4, table size: 8
 	index: 0, handler: __TI_decompress_rle24
 	index: 1, handler: __TI_decompress_none
 
@@ -353,7 +353,7 @@ GLOBAL SYMBOLS: SORTED ALPHABETICALLY BY Name
 address   name                           
 -------   ----                           
 00004021  C$$EXIT                        
-00004d7b  CPUcpsie                       
+00004d6b  CPUcpsie                       
 00004b75  EMACAddrGet                    
 00004745  EMACConfigGet                  
 00004665  EMACConfigSet                  
@@ -366,34 +366,34 @@ address   name
 0000498d  EMACPHYRead                    
 000049b3  EMACPHYWrite                   
 00004c41  EMACReset                      
-00004dd5  EMACRxDMADescriptorListSet     
+00004dc5  EMACRxDMADescriptorListSet     
 00004c57  EMACRxEnable                   
-00004ddb  EMACTimestampIntStatus         
-00004de1  EMACTxDMADescriptorListSet     
-00004dc5  EMACTxDMAPollDemand            
+00004dcb  EMACTimestampIntStatus         
+00004dd1  EMACTxDMADescriptorListSet     
+00004db5  EMACTxDMAPollDemand            
 00004c6d  EMACTxEnable                   
 000029b9  InitDMADescriptors             
 00003965  IntEnable                      
 00004d1d  IntMasterEnable                
-00004de7  ResetISR                       
+00004dd7  ResetISR                       
 UNDEFED   SHT$$INIT_ARRAY$$Base          
 UNDEFED   SHT$$INIT_ARRAY$$Limit         
 000013e5  SysCtlClockFreqSet             
-00004ded  SysCtlDelay                    
+00004ddd  SysCtlDelay                    
 0000469d  SysCtlPeripheralReady          
 000040c9  SysCtlPeripheralReset          
-00004d2d  SysTickIntHandler              
+00004de3  SysTickIntHandler              
 20018254  __STACK_END                    
 00000800  __STACK_SIZE                   
 20018254  __STACK_TOP                    
-00005178  __TI_CINIT_Base                
-00005188  __TI_CINIT_Limit               
-00005170  __TI_Handler_Table_Base        
-00005178  __TI_Handler_Table_Limit       
+00005168  __TI_CINIT_Base                
+00005178  __TI_CINIT_Limit               
+00005160  __TI_Handler_Table_Base        
+00005168  __TI_Handler_Table_Limit       
 00003741  __TI_auto_init                 
 20018294  __TI_cleanup_ptr               
-00004d6d  __TI_decompress_none           
-00004df3  __TI_decompress_rle24          
+00004d5d  __TI_decompress_none           
+00004de9  __TI_decompress_rle24          
 20018298  __TI_dtors_ptr                 
 2001829c  __TI_enable_exit_profile_output
 ffffffff  __TI_pprof_out_hndl            
@@ -420,7 +420,7 @@ ffffffff  __c_args__
 00004c9f  _register_lock                 
 00004c99  _register_unlock               
 00003cf7  _system_post_cinit             
-00004dff  _system_pre_init               
+00004df5  _system_pre_init               
 200182b0  _unlock                        
 00004025  abort                          
 ffffffff  binit                          
@@ -433,11 +433,10 @@ ffffffff  binit
 0000221d  etharp_query                   
 00004939  etharp_request                 
 000045ad  etharp_tmr                     
-00005117  ethbroadcast                   
+0000510b  ethbroadcast                   
 00002edd  ethernet_input                 
-0000511d  ethzero                        
+00005111  ethzero                        
 0000402d  exit                           
-UNDEFED   fs_tick                        
 20018274  g_RxDescList                   
 20018284  g_TxDescList                   
 20017650  g_pRxDescriptors               
@@ -448,9 +447,9 @@ UNDEFED   fs_tick
 20018258  g_ui32LocalTimer               
 20017a20  g_ui32NormalInts               
 20017a24  g_ui32SysClock                 
-00004dcd  icmp_dest_unreach              
+00004dbd  icmp_dest_unreach              
 00001a9d  icmp_input                     
-00004d3d  inet_chksum                    
+00004d2d  inet_chksum                    
 000045ed  inet_chksum_pbuf               
 00004849  ip4_addr_isbroadcast           
 000015d1  ip_input                       
@@ -461,10 +460,10 @@ UNDEFED   fs_tick
 00002725  lwIPInit                       
 00004af5  lwIPTimer                      
 00004baf  lwip_htonl                     
-00004d87  lwip_htons                     
-00004d4d  lwip_init                      
+00004d77  lwip_htons                     
+00004d3d  lwip_init                      
 00004baf  lwip_ntohl                     
-00004d87  lwip_ntohs                     
+00004d77  lwip_ntohs                     
 20017770  lwip_stats                     
 00002c01  main                           
 200182b4  main_func_sp                   
@@ -482,12 +481,12 @@ UNDEFED   fs_tick
 20017a28  netif_default                  
 20017a2c  netif_list                     
 00004b93  netif_set_addr                 
-00004d95  netif_set_default              
-00004da1  netif_set_gw                   
+00004d85  netif_set_default              
+00004d91  netif_set_gw                   
 00003db1  netif_set_ipaddr               
 00004cd5  netif_set_link_down            
 00004a25  netif_set_link_up              
-00004dad  netif_set_netmask              
+00004d9d  netif_set_netmask              
 00004a49  netif_set_up                   
 00001ea9  pbuf_alloc                     
 00004965  pbuf_cat                       
@@ -501,17 +500,17 @@ UNDEFED   fs_tick
 00004c83  pbuf_ref                       
 20000000  ram_heap                       
 000036cd  raw_input                      
-00004d5d  sys_arch_protect               
+00004d4d  sys_arch_protect               
 00004cad  sys_arch_unprotect             
-00004db9  sys_now                        
+00004da9  sys_now                        
 00003a35  sys_timeout                    
 00004b15  sys_timeouts_init              
 00003155  tcp_abandon                    
-00004df9  tcp_abort                      
+00004def  tcp_abort                      
 20017a30  tcp_active_pcbs                
 20017a51  tcp_active_pcbs_changed        
 000028e9  tcp_alloc                      
-000050f8  tcp_backoff                    
+000050ec  tcp_backoff                    
 20017a34  tcp_bound_pcbs                 
 00004cc1  tcp_close                      
 00004b35  tcp_eff_send_mss               
@@ -525,7 +524,7 @@ UNDEFED   fs_tick
 0000190d  tcp_output                     
 00004569  tcp_pcb_purge                  
 00003e0d  tcp_pcb_remove                 
-00005110  tcp_persist_backoff            
+00005104  tcp_persist_backoff            
 00003b05  tcp_process_refused_data       
 000049d9  tcp_recv_null                  
 0000487b  tcp_recved                     
@@ -681,36 +680,36 @@ address   name
 00004cf9  tcp_segs_free                  
 00004d0d  EMACFrameFilterSet             
 00004d1d  IntMasterEnable                
-00004d2d  SysTickIntHandler              
-00004d3d  inet_chksum                    
-00004d4d  lwip_init                      
-00004d5d  sys_arch_protect               
-00004d6d  __TI_decompress_none           
-00004d7b  CPUcpsie                       
-00004d87  lwip_htons                     
-00004d87  lwip_ntohs                     
-00004d95  netif_set_default              
-00004da1  netif_set_gw                   
-00004dad  netif_set_netmask              
-00004db9  sys_now                        
-00004dc5  EMACTxDMAPollDemand            
-00004dcd  icmp_dest_unreach              
-00004dd5  EMACRxDMADescriptorListSet     
-00004ddb  EMACTimestampIntStatus         
-00004de1  EMACTxDMADescriptorListSet     
-00004de7  ResetISR                       
-00004ded  SysCtlDelay                    
-00004df3  __TI_decompress_rle24          
-00004df9  tcp_abort                      
-00004dff  _system_pre_init               
-000050f8  tcp_backoff                    
-00005110  tcp_persist_backoff            
-00005117  ethbroadcast                   
-0000511d  ethzero                        
-00005170  __TI_Handler_Table_Base        
-00005178  __TI_CINIT_Base                
-00005178  __TI_Handler_Table_Limit       
-00005188  __TI_CINIT_Limit               
+00004d2d  inet_chksum                    
+00004d3d  lwip_init                      
+00004d4d  sys_arch_protect               
+00004d5d  __TI_decompress_none           
+00004d6b  CPUcpsie                       
+00004d77  lwip_htons                     
+00004d77  lwip_ntohs                     
+00004d85  netif_set_default              
+00004d91  netif_set_gw                   
+00004d9d  netif_set_netmask              
+00004da9  sys_now                        
+00004db5  EMACTxDMAPollDemand            
+00004dbd  icmp_dest_unreach              
+00004dc5  EMACRxDMADescriptorListSet     
+00004dcb  EMACTimestampIntStatus         
+00004dd1  EMACTxDMADescriptorListSet     
+00004dd7  ResetISR                       
+00004ddd  SysCtlDelay                    
+00004de3  SysTickIntHandler              
+00004de9  __TI_decompress_rle24          
+00004def  tcp_abort                      
+00004df5  _system_pre_init               
+000050ec  tcp_backoff                    
+00005104  tcp_persist_backoff            
+0000510b  ethbroadcast                   
+00005111  ethzero                        
+00005160  __TI_Handler_Table_Base        
+00005168  __TI_CINIT_Base                
+00005168  __TI_Handler_Table_Limit       
+00005178  __TI_CINIT_Limit               
 20000000  ram_heap                       
 200172f0  g_pTxDescriptors               
 20017650  g_pRxDescriptors               
@@ -755,6 +754,5 @@ ffffffff  __c_args__
 ffffffff  binit                          
 UNDEFED   SHT$$INIT_ARRAY$$Base          
 UNDEFED   SHT$$INIT_ARRAY$$Limit         
-UNDEFED   fs_tick                        
 
-[199 symbols]
+[198 symbols]

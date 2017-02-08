@@ -317,11 +317,6 @@ SysTickIntHandler(void)
     // Call the lwIP timer handler.
     //
     lwIPTimer(SYSTICKMS);
-
-    //
-    // Run the file system tick handler.
-    //
-    fs_tick(SYSTICKMS);
 }
 
 //*****************************************************************************
